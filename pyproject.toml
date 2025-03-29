@@ -7,7 +7,7 @@ name = "ngsfetch"
 version = "0.1.0"
 description = "Fast metadata and fastq retrieval with ffq and aria2c"
 readme = { file = "README.md", content-type = "text/markdown" }
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 license = {text = "MIT"}
 authors = [
     {name = "Naoto Kubota", email = "the.owner.of.the.dream123@gmail.com"}

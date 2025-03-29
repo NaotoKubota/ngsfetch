@@ -1,4 +1,4 @@
-# ngsfetch
+# ngsfetch (v0.1.0)
 
 [![GitHub License](https://img.shields.io/github/license/NaotoKubota/ngsfetch)](https://github.com/NaotoKubota/ngsfetch/blob/main/LICENSE)
 [![DOI](https://zenodo.org/badge/956254675.svg)](https://doi.org/10.5281/zenodo.15107010)

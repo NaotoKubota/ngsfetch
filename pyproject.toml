@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ngsfetch"
+version = "0.1.0"
+description = "Fast metadata and fastq retrieval with ffq and aria2c"
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Naoto Kubota", email = "the.owner.of.the.dream123@gmail.com"}
+]
+dependencies = [
+	"ffq>=0.3.1",
+	"aria2>=0.0.1b0"
+]
+urls = { "Homepage" = "https://github.com/NaotoKubota/ngsfetch" }
+
+[project.scripts]
+ngsfetch = "ngsfetch.main:main"

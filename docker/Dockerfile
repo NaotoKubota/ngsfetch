@@ -1,5 +1,5 @@
 ##################################################################
-# Dockerfile to build container images for ngsfetch (v0.1.0)
+# Dockerfile to build container images for ngsfetch (v0.1.1)
 # Based on python 3.9-bullseye
 ##################################################################
 
@@ -19,7 +19,7 @@ RUN apt-get -qq update && \
 RUN pip install --upgrade pip
 
 # Install ngsfetch
-RUN git clone https://github.com/NaotoKubota/ngsfetch.git -b v0.1.0 && \
+RUN git clone https://github.com/NaotoKubota/ngsfetch.git -b v0.1.1 && \
     cd ngsfetch && \
     pip install .
 

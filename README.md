@@ -1,4 +1,4 @@
-# ngsfetch (v0.1.0)
+# ngsfetch (v0.1.1)
 
 [![GitHub License](https://img.shields.io/github/license/NaotoKubota/ngsfetch)](https://github.com/NaotoKubota/ngsfetch/blob/main/LICENSE)
 [![DOI](https://zenodo.org/badge/956254675.svg)](https://doi.org/10.5281/zenodo.15107010)
@@ -83,7 +83,7 @@ docker pull naotokubota/ngsfetch
 ```bash
 usage: ngsfetch [-h] [-i ID] [-o OUTPUT] [-p PROCESSES] [--attempts ATTEMPTS] [-v]
 
-ngsfetch v0.1.0 - fast retrieval of metadata and fastq files with ffq and aria2c
+ngsfetch v0.1.1 - fast retrieval of metadata and fastq files with ffq and aria2c
 
 optional arguments:
   -h, --help            show this help message and exit

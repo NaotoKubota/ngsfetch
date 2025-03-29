@@ -11,12 +11,12 @@ VERSION = "v0.1.0"
 
 def parse_args():
 	parser = argparse.ArgumentParser(
-		description=f"ngsfetch {VERSION} - Create Sashimi plot from Shiba output"
+		description=f"ngsfetch {VERSION} - fast retrieval of metadata and fastq files with ffq and aria2c",
 	)
 
 	parser.add_argument("-i", "--id", type = str, help = "ID of the data to fetch")
 	parser.add_argument("-o", "--output", type = str, help = "Output directory")
-	parser.add_argument("-p", "--processes", type = int, default = 1, help = "Number of processes to use")
+	parser.add_argument("-p", "--processes", type=int, default=1, help="Number of processes to use (up to 16)")
 	parser.add_argument("--attempts", type = int, default = 3, help = "Number of attempts to fetch metadata and fastq files")
 	parser.add_argument("-v", "--verbose", action = "store_true", help = "Increase verbosity")
 	args = parser.parse_args()
@@ -47,7 +47,7 @@ def main():
 	# Fetch metadata with ffq
 	time.sleep(1)
 	json_file = os.path.join(output_dir, f"{args.id}_metadata.json")
-	if os.exists(json_file):
+	if os.path.exists(json_file):
 		logger.info(f"Metadata file {json_file} already exists")
 	else:
 		logger.info(f"Fetching metadata for {args.id}")
@@ -56,14 +56,14 @@ def main():
 	# Make a fastq url table
 	logger.info(f"Making fastq url table from {json_file}")
 	md5_fastq_table = os.path.join(output_dir, f"{args.id}_fastq_ftp.txt")
-	if os.exists(md5_fastq_table):
+	if os.path.exists(md5_fastq_table):
 		logger.info(f"Fastq url table {md5_fastq_table} already exists")
 	else:
 		_returncode = download.extract_from_flat_fastq_json(json_file, md5_fastq_table)
 
 	# Download fastq files with aria2c
 	logger.info(f"Downloading fastq files from {md5_fastq_table}")
-	_returncode = download.fetch_fastq(md5_fastq_table, fastq_dir, cpu = args.processes, attempts=args.attempts)
+	_returncode = download.fetch_fastq(md5_fastq_table, fastq_dir, processes = args.processes, attempts=args.attempts)
 
 	logger.info("Done!")
 	logger.info(f"Fastq files downloaded to {fastq_dir}")

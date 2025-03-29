@@ -7,7 +7,7 @@ from . import ffq, download
 # Configure logger
 logger = logging.getLogger(__name__)
 # Set version
-VERSION = "v0.1.0"
+VERSION = "v0.1.1"
 
 def parse_args():
 	parser = argparse.ArgumentParser(

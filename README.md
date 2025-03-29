@@ -1,6 +1,7 @@
 # ngsfetch
 
 [![GitHub License](https://img.shields.io/github/license/NaotoKubota/ngsfetch)](https://github.com/NaotoKubota/ngsfetch/blob/main/LICENSE)
+[![DOI](https://zenodo.org/badge/956254675.svg)](https://doi.org/10.5281/zenodo.15107010)
 [![GitHub Release](https://img.shields.io/github/v/release/NaotoKubota/ngsfetch?style=flat)](https://github.com/NaotoKubota/ngsfetch/releases)
 [![GitHub Release Date](https://img.shields.io/github/release-date/NaotoKubota/ngsfetch)](https://github.com/NaotoKubota/ngsfetch/releases)
 [![Create Release](https://github.com/NaotoKubota/ngsfetch/actions/workflows/release.yaml/badge.svg)](https://github.com/NaotoKubota/ngsfetch/actions/workflows/release.yaml)

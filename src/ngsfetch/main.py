@@ -11,7 +11,7 @@ VERSION = "v0.1.1"
 
 def parse_args():
 	parser = argparse.ArgumentParser(
-		description=f"ngsfetch {VERSION} - fast retrieval of metadata and fastq files with ffq and aria2c",
+		description=f"ngsfetch {VERSION} - fast retrieval of metadata and fastq files with ffq and aria2",
 	)
 
 	parser.add_argument("-i", "--id", required = True, type = str, help = "ID of the data to fetch")

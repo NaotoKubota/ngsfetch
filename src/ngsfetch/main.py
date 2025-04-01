@@ -27,6 +27,11 @@ def main():
 	# Get arguments
 	args = parse_args()
 
+	# Check if -p is between 1 and 16
+	if args.processes < 1 or args.processes > 16:
+		logger.error("Number of processes must be between 1 and 16")
+		sys.exit(1)
+
 	# Set up logging
 	logging.basicConfig(
 		format = "[%(asctime)s] %(levelname)7s %(message)s",

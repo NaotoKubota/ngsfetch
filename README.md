@@ -72,6 +72,14 @@ docker pull naotokubota/ngsfetch
 
 - Linux (i.e. where the `md5sum` command is available)
 
+> [!TIP]
+> Are you using MacOS or Windows? Don't worry! You can use [Docker](https://www.docker.com/) to run `ngsfetch` on your local machine. Just install Docker and run the following command:
+> ```bash
+> docker run -it --rm -v /path/to/output:/data naotokubota/ngsfetch ngsfetch -i GSE52856 -o /data/GSE52856 -p 16
+> ```
+> This command will mount the `/path/to/output` directory on your local machine to the `/data` directory in the Docker container, allowing you to access the downloaded files on your local machine.
+> Make sure to replace `/path/to/output` with the actual path where you want to save the downloaded files.
+
 ### python packages
 
 - python (>=3.9)

@@ -70,11 +70,14 @@ def main():
 	logger.info(f"Downloading fastq files from {md5_fastq_table}")
 	_returncode = download.fetch_fastq(md5_fastq_table, fastq_dir, processes = args.processes, attempts=args.attempts)
 
-	logger.info("Done!")
 	logger.info(f"Fastq files downloaded to {fastq_dir}")
 	logger.info(f"Metadata file saved to {json_file}")
 	logger.info(f"Fastq url table saved to {md5_fastq_table}")
-	logger.info("Exiting...")
+	if _returncode == 0:
+		logger.info("All tasks completed successfully!")
+	else:
+		logger.warning("Some tasks failed. Please check the logs for details.")
+
 	return 0
 
 if __name__ == "__main__":

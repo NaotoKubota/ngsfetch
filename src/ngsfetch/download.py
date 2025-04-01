@@ -67,6 +67,9 @@ def fetch_fastq(md5_fastq_table, fastq_dir, processes = 1, attempts = 3):
 							break
 						else:
 							logger.error(f"MD5 checksum failed for {file_name}")
+							# Remove the file if checksum fails
+							os.remove(file_path)
+							logger.info(f"Removed {file_path} due to checksum failure.")
 					except Exception as e:
 						logger.error(f"An error occurred during MD5 verification: {e}")
 				else:
@@ -82,6 +85,7 @@ def fetch_fastq(md5_fastq_table, fastq_dir, processes = 1, attempts = 3):
 	downloaded_files = [file for file in downloaded_files if file.endswith(".fastq.gz")]
 	if len(downloaded_files) == len(lines):
 		logger.info("All files downloaded successfully.")
+		return 0
 	else:
 		logger.warning(f"Some files were not downloaded. Expected {len(lines)} but got {len(downloaded_files)}.")
-	return 0
+		return 1

@@ -14,8 +14,8 @@ def parse_args():
 		description=f"ngsfetch {VERSION} - fast retrieval of metadata and fastq files with ffq and aria2c",
 	)
 
-	parser.add_argument("-i", "--id", type = str, help = "ID of the data to fetch")
-	parser.add_argument("-o", "--output", type = str, help = "Output directory")
+	parser.add_argument("-i", "--id", required = True, type = str, help = "ID of the data to fetch")
+	parser.add_argument("-o", "--output", required = True, type = str, help = "Output directory")
 	parser.add_argument("-p", "--processes", type=int, default=1, help="Number of processes to use (up to 16)")
 	parser.add_argument("--attempts", type = int, default = 3, help = "Number of attempts to fetch metadata and fastq files")
 	parser.add_argument("-v", "--verbose", action = "store_true", help = "Increase verbosity")

@@ -16,7 +16,8 @@ A utility to retrieve fastq files with [ffq](https://github.com/pachterlab/ffq) 
 
 - [GEO](https://www.ncbi.nlm.nih.gov/geo/): Gene Expression Omnibus,
 - [SRA](https://www.ncbi.nlm.nih.gov/sra): Sequence Read Archive,
-- [EMBL-EBI](https://www.ebi.ac.uk/): European Molecular BIology Laboratory’s European BIoinformatics Institute.
+- [EMBL-EBI](https://www.ebi.ac.uk/): European Molecular BIology Laboratory’s European BIoinformatics Institute,
+- [DDBJ](https://www.ddbj.nig.ac.jp/index-e.html): DNA Data Bank of Japan.
 
 > [!IMPORTANT]
 > - **Fast**: Uses `aria2` to download files in parallel, which can significantly speed up the download process.

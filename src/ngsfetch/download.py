@@ -3,7 +3,6 @@ import logging
 import os
 import subprocess
 import time
-import datetime
 from . import general
 logger = logging.getLogger(__name__)
 
@@ -60,8 +59,7 @@ def fetch_fastq(md5_fastq_table, fastq_dir, processes = 1, attempts = 3):
 					try:
 						with open(f"{fastq_dir}/log/md5sum.log", "a") as md5_log:
 							process = subprocess.Popen(md5sum_command, stdin=subprocess.PIPE, stdout=md5_log, stderr=md5_log)
-							timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-							process.communicate(input=f"{timestamp}\t{md5}\t{file_path}\n".encode())
+							process.communicate(input=f"{md5}  {file_path}\n".encode())
 						if process.returncode == 0:
 							logger.info(f"MD5 checksum verified for {file_name}")
 							break

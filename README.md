@@ -8,7 +8,10 @@
 [![Publish PyPI](https://github.com/NaotoKubota/ngsfetch/actions/workflows/publish.yaml/badge.svg)](https://github.com/NaotoKubota/ngsfetch/actions/workflows/publish.yaml)
 [![Python](https://img.shields.io/pypi/pyversions/ngsfetch.svg?label=Python&color=blue)](https://pypi.org/project/ngsfetch/)
 [![PyPI](https://img.shields.io/pypi/v/ngsfetch.svg?label=PyPI&color=orange)](https://pypi.org/project/ngsfetch/)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/ngsfetch.svg?label=PyPI%20-%20Downloads&color=orange)](https://pypi.org/project/ngsfetch/)
 [![Conda](https://img.shields.io/conda/v/bioconda/ngsfetch?color=3EB049)](https://anaconda.org/bioconda/ngsfetch)
+[![Conda - Downloads](https://img.shields.io/conda/dn/bioconda/ngsfetch?label=Conda%20-%20Downloads&color=3EB049)](https://anaconda.org/bioconda/ngsfetch)
+[![Docker](https://img.shields.io/docker/v/naotokubota/ngsfetch?color=blue&label=Docker)](https://hub.docker.com/r/naotokubota/ngsfetch)
 [![Docker Pulls](https://img.shields.io/docker/pulls/naotokubota/ngsfetch)](https://hub.docker.com/r/naotokubota/ngsfetch)
 [![Docker Image Size](https://img.shields.io/docker/image-size/naotokubota/ngsfetch)](https://hub.docker.com/r/naotokubota/ngsfetch)
 

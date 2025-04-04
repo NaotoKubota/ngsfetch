@@ -28,9 +28,13 @@ def main():
 	args = parse_args()
 
 	# Check if -p is between 1 and 16
-	if args.processes < 1 or args.processes > 16:
-		logger.error("Number of processes must be between 1 and 16")
-		sys.exit(1)
+	processes = args.processes
+	if processes > 16:
+		logger.warning(f"Number of processes {processes} is greater than 16. Setting to 16.")
+		processes = 16
+	elif processes < 1:
+		logger.warning(f"Number of processes {processes} is less than 1. Setting to 1.")
+		processes = 1
 
 	# Set up logging
 	logging.basicConfig(
@@ -68,7 +72,7 @@ def main():
 
 	# Download fastq files with aria2c
 	logger.info(f"Downloading fastq files from {md5_fastq_table}")
-	_returncode = download.fetch_fastq(md5_fastq_table, fastq_dir, processes = args.processes, attempts=args.attempts)
+	_returncode = download.fetch_fastq(md5_fastq_table, fastq_dir, processes = processes, attempts=args.attempts)
 
 	logger.info(f"Fastq files downloaded to {fastq_dir}")
 	logger.info(f"Metadata file saved to {json_file}")

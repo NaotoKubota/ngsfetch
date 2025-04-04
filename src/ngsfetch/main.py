@@ -27,15 +27,6 @@ def main():
 	# Get arguments
 	args = parse_args()
 
-	# Check if -p is between 1 and 16
-	processes = args.processes
-	if processes > 16:
-		logger.warning(f"Number of processes {processes} is greater than 16. Setting to 16.")
-		processes = 16
-	elif processes < 1:
-		logger.warning(f"Number of processes {processes} is less than 1. Setting to 1.")
-		processes = 1
-
 	# Set up logging
 	logging.basicConfig(
 		format = "[%(asctime)s] %(levelname)7s %(message)s",
@@ -46,6 +37,15 @@ def main():
 	logger.info(f"Running ngsfetch ({VERSION})")
 	time.sleep(1)
 	logger.debug(f"Arguments: {args}")
+
+	# Check if -p is between 1 and 16
+	processes = args.processes
+	if processes > 16:
+		logger.warning(f"Number of processes {processes} is greater than 16. Setting to 16.")
+		processes = 16
+	elif processes < 1:
+		logger.warning(f"Number of processes {processes} is less than 1. Setting to 1.")
+		processes = 1
 
 	# Make output directory
 	output_dir = args.output

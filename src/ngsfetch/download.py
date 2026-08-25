@@ -34,56 +34,61 @@ def fetch_fastq(md5_fastq_table, fastq_dir, processes = 1, attempts = 3):
 	Fetch fastq files using aria2c.
 	"""
 	with open(md5_fastq_table, "r") as f:
-		lines = f.readlines()
-		logger.debug(f"Loaded {len(lines)} lines from fastq table.")
-		# Extract file names from url
-		for line in lines:
-			md5, url = line.strip().split("\t")
-			file_name = url.split("/")[-1]
-			file_path = f"{fastq_dir}/{file_name}"
-			logger.debug(f"Downloading {file_name} to {file_path}")
-			# Check if file already exists
-			if os.path.exists(file_path):
-				logger.info(f"File {file_path} already exists. Skipping download.")
-				continue
-			# Download file using aria2c
-			command = ["aria2c", "-x", str(processes), "-d", fastq_dir, url]
-			log_file = f"{fastq_dir}/log/{file_name}.aria2c.log"
-			for attempt in range(attempts):
-				logger.info(f"Attempt {attempt + 1} to download {file_name}")
-				returncode = general.execute_command(command, log_file=log_file)
-				if returncode == 0:
-					logger.info(f"Downloaded {file_name}")
-					# Verify md5 checksum
-					md5sum_command = ["md5sum", "-c"]
-					try:
-						with open(f"{fastq_dir}/log/md5sum.log", "a") as md5_log:
-							process = subprocess.Popen(md5sum_command, stdin=subprocess.PIPE, stdout=md5_log, stderr=md5_log)
-							process.communicate(input=f"{md5}  {file_path}\n".encode())
-						if process.returncode == 0:
-							logger.info(f"MD5 checksum verified for {file_name}")
-							break
-						else:
-							logger.error(f"MD5 checksum failed for {file_name}")
-							# Remove the file if checksum fails
-							os.remove(file_path)
-							logger.info(f"Removed {file_path} due to checksum failure.")
-					except Exception as e:
-						logger.error(f"An error occurred during MD5 verification: {e}")
-				else:
-					# Retry download
-					if attempt < attempts - 1:
-						logger.info(f"Retrying download for {file_name}...")
-						time.sleep(5)
-					else:
-						logger.error(f"Failed to download {file_name} after {attempts} attempts.")
+		lines = [line.strip() for line in f if line.strip()]
+	total = len(lines)
+	logger.debug(f"Loaded {total} lines from fastq table.")
+	failed_files = []
+	# Extract file names from url
+	for line in lines:
+		md5, url = line.split("\t")
+		file_name = url.split("/")[-1]
+		file_path = f"{fastq_dir}/{file_name}"
+		logger.debug(f"Downloading {file_name} to {file_path}")
+		# Check if file already exists
+		if os.path.exists(file_path):
+			logger.info(f"File {file_path} already exists. Skipping download.")
+			continue
+		# Download file using aria2c
+		command = ["aria2c", "-x", str(processes), "-d", fastq_dir, url]
+		log_file = f"{fastq_dir}/log/{file_name}.aria2c.log"
+		success = False
+		for attempt in range(attempts):
+			logger.info(f"Attempt {attempt + 1} to download {file_name}")
+			returncode = general.execute_command(command, log_file=log_file)
+			if returncode == 0:
+				logger.info(f"Downloaded {file_name}")
+				# Verify md5 checksum
+				md5sum_command = ["md5sum", "-c"]
+				try:
+					with open(f"{fastq_dir}/log/md5sum.log", "a") as md5_log:
+						process = subprocess.Popen(md5sum_command, stdin=subprocess.PIPE, stdout=md5_log, stderr=md5_log)
+						process.communicate(input=f"{md5}  {file_path}\n".encode())
+					if process.returncode == 0:
+						logger.info(f"MD5 checksum verified for {file_name}")
+						success = True
 						break
-	# Check if all files were downloaded
-	downloaded_files = os.listdir(fastq_dir)
-	downloaded_files = [file for file in downloaded_files if file.endswith(".fastq.gz")]
-	if len(downloaded_files) == len(lines):
-		logger.info("All files downloaded successfully.")
-		return 0
-	else:
-		logger.warning(f"Some files were not downloaded. Expected {len(lines)} but got {len(downloaded_files)}.")
+					else:
+						logger.error(f"MD5 checksum failed for {file_name}")
+						# Remove the file if checksum fails
+						os.remove(file_path)
+						logger.info(f"Removed {file_path} due to checksum failure.")
+				except Exception as e:
+					logger.error(f"An error occurred during MD5 verification: {e}")
+			# Retry unless this was the last attempt
+			if attempt < attempts - 1:
+				logger.info(f"Retrying download for {file_name}...")
+				time.sleep(5)
+		if not success:
+			logger.error(f"Failed to download {file_name} after {attempts} attempts.")
+			# Remove any partial output so it is not mistaken for a complete file
+			for leftover in (file_path, f"{file_path}.aria2"):
+				if os.path.exists(leftover):
+					os.remove(leftover)
+					logger.info(f"Removed incomplete file {leftover}")
+			failed_files.append(file_name)
+	# Report based on tracked results, not files left on disk
+	if failed_files:
+		logger.error(f"Completed with {len(failed_files)}/{total} files failed: {failed_files}")
 		return 1
+	logger.info(f"All {total} files downloaded successfully.")
+	return 0

@@ -7,7 +7,7 @@ from . import ffq, download
 # Configure logger
 logger = logging.getLogger(__name__)
 # Set version
-VERSION = "v0.1.1"
+VERSION = "v0.1.2"
 
 def parse_args():
 	parser = argparse.ArgumentParser(
@@ -82,7 +82,7 @@ def main():
 	else:
 		logger.warning("Some tasks failed. Please check the logs for details.")
 
-	return 0
+	return _returncode
 
 if __name__ == "__main__":
-	main()
+	sys.exit(main())

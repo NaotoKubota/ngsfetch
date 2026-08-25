@@ -17,7 +17,7 @@ body:
     attributes:
       label: '🔖 ngsfetch Version'
       description: 'Required: Specify the ngsfetch version you are using. You can find this information in the `ngsfetch -h` command.'
-      placeholder: 'e.g., v0.1.1'
+      placeholder: 'e.g., v0.1.2'
     validations:
       required: true
 

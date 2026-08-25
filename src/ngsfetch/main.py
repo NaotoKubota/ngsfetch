@@ -7,17 +7,17 @@ from . import ffq, download
 # Configure logger
 logger = logging.getLogger(__name__)
 # Set version
-VERSION = "v0.1.1"
+VERSION = "v0.1.2"
 
 def parse_args():
 	parser = argparse.ArgumentParser(
-		description=f"ngsfetch {VERSION} - fast retrieval of metadata and fastq files with ffq and aria2c",
+		description=f"ngsfetch {VERSION} - fast retrieval of metadata and fastq files with ffq and aria2",
 	)
 
-	parser.add_argument("-i", "--id", type = str, help = "ID of the data to fetch")
-	parser.add_argument("-o", "--output", type = str, help = "Output directory")
+	parser.add_argument("-i", "--id", required = True, type = str, help = "ID of the data to fetch")
+	parser.add_argument("-o", "--output", required = True, type = str, help = "Output directory")
 	parser.add_argument("-p", "--processes", type=int, default=1, help="Number of processes to use (up to 16)")
-	parser.add_argument("--attempts", type = int, default = 3, help = "Number of attempts to fetch metadata and fastq files")
+	parser.add_argument("--attempts", type = int, default = 3, help = "Number of attempts to fetch metadata and fastq files. Default: %(default)s")
 	parser.add_argument("-v", "--verbose", action = "store_true", help = "Increase verbosity")
 	args = parser.parse_args()
 	return args
@@ -37,6 +37,15 @@ def main():
 	logger.info(f"Running ngsfetch ({VERSION})")
 	time.sleep(1)
 	logger.debug(f"Arguments: {args}")
+
+	# Check if -p is between 1 and 16
+	processes = args.processes
+	if processes > 16:
+		logger.warning(f"Number of processes {processes} is greater than 16. Setting to 16.")
+		processes = 16
+	elif processes < 1:
+		logger.warning(f"Number of processes {processes} is less than 1. Setting to 1.")
+		processes = 1
 
 	# Make output directory
 	output_dir = args.output
@@ -63,14 +72,17 @@ def main():
 
 	# Download fastq files with aria2c
 	logger.info(f"Downloading fastq files from {md5_fastq_table}")
-	_returncode = download.fetch_fastq(md5_fastq_table, fastq_dir, processes = args.processes, attempts=args.attempts)
+	_returncode = download.fetch_fastq(md5_fastq_table, fastq_dir, processes = processes, attempts=args.attempts)
 
-	logger.info("Done!")
 	logger.info(f"Fastq files downloaded to {fastq_dir}")
 	logger.info(f"Metadata file saved to {json_file}")
 	logger.info(f"Fastq url table saved to {md5_fastq_table}")
-	logger.info("Exiting...")
-	return 0
+	if _returncode == 0:
+		logger.info("All tasks completed successfully!")
+	else:
+		logger.warning("Some tasks failed. Please check the logs for details.")
+
+	return _returncode
 
 if __name__ == "__main__":
-	main()
+	sys.exit(main())

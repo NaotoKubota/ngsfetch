@@ -1,4 +1,4 @@
-# ngsfetch (v0.1.1)
+# ngsfetch (v0.1.2)
 
 [![GitHub License](https://img.shields.io/github/license/NaotoKubota/ngsfetch)](https://github.com/NaotoKubota/ngsfetch/blob/main/LICENSE)
 [![DOI](https://zenodo.org/badge/956254675.svg)](https://doi.org/10.5281/zenodo.15107010)
@@ -8,7 +8,10 @@
 [![Publish PyPI](https://github.com/NaotoKubota/ngsfetch/actions/workflows/publish.yaml/badge.svg)](https://github.com/NaotoKubota/ngsfetch/actions/workflows/publish.yaml)
 [![Python](https://img.shields.io/pypi/pyversions/ngsfetch.svg?label=Python&color=blue)](https://pypi.org/project/ngsfetch/)
 [![PyPI](https://img.shields.io/pypi/v/ngsfetch.svg?label=PyPI&color=orange)](https://pypi.org/project/ngsfetch/)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/ngsfetch.svg?label=PyPI%20-%20Downloads&color=orange)](https://pypi.org/project/ngsfetch/)
 [![Conda](https://img.shields.io/conda/v/bioconda/ngsfetch?color=3EB049)](https://anaconda.org/bioconda/ngsfetch)
+[![Conda - Downloads](https://img.shields.io/conda/dn/bioconda/ngsfetch?label=Conda%20-%20Downloads&color=3EB049)](https://anaconda.org/bioconda/ngsfetch)
+[![Docker](https://img.shields.io/docker/v/naotokubota/ngsfetch?color=blue&label=Docker)](https://hub.docker.com/r/naotokubota/ngsfetch)
 [![Docker Pulls](https://img.shields.io/docker/pulls/naotokubota/ngsfetch)](https://hub.docker.com/r/naotokubota/ngsfetch)
 [![Docker Image Size](https://img.shields.io/docker/image-size/naotokubota/ngsfetch)](https://hub.docker.com/r/naotokubota/ngsfetch)
 
@@ -16,7 +19,8 @@ A utility to retrieve fastq files with [ffq](https://github.com/pachterlab/ffq) 
 
 - [GEO](https://www.ncbi.nlm.nih.gov/geo/): Gene Expression Omnibus,
 - [SRA](https://www.ncbi.nlm.nih.gov/sra): Sequence Read Archive,
-- [EMBL-EBI](https://www.ebi.ac.uk/): European Molecular BIology Laboratory’s European BIoinformatics Institute.
+- [EMBL-EBI](https://www.ebi.ac.uk/): European Molecular BIology Laboratory’s European BIoinformatics Institute,
+- [DDBJ](https://www.ddbj.nig.ac.jp/index-e.html): DNA Data Bank of Japan.
 
 > [!IMPORTANT]
 > - **Fast**: Uses `aria2` to download files in parallel, which can significantly speed up the download process.
@@ -72,6 +76,14 @@ docker pull naotokubota/ngsfetch
 
 - Linux (i.e. where the `md5sum` command is available)
 
+> [!TIP]
+> Are you using MacOS or Windows? Don't worry! You can use [Docker](https://www.docker.com/) to run `ngsfetch` on your local machine. Just install Docker and run the following command:
+> ```bash
+> docker run -it --rm -v /path/to/output:/data naotokubota/ngsfetch ngsfetch -i GSE52856 -o /data -p 16
+> ```
+> This command will mount the `/path/to/output` directory on your local machine to the `/data` directory in the Docker container, allowing you to access the downloaded files on your local machine.
+> Make sure to replace `/path/to/output` with the actual path where you want to save the downloaded files.
+
 ### python packages
 
 - python (>=3.9)
@@ -83,7 +95,7 @@ docker pull naotokubota/ngsfetch
 ```bash
 usage: ngsfetch [-h] [-i ID] [-o OUTPUT] [-p PROCESSES] [--attempts ATTEMPTS] [-v]
 
-ngsfetch v0.1.1 - fast retrieval of metadata and fastq files with ffq and aria2c
+ngsfetch v0.1.2 - fast retrieval of metadata and fastq files with ffq and aria2c
 
 optional arguments:
   -h, --help            show this help message and exit
